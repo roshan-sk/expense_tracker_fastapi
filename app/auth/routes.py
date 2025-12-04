@@ -46,10 +46,10 @@ def login(data: UserLogin, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == data.email).first()
 
     if not user:
-        raise HTTPException(status_code=400, detail="Invalid email or password")
+        raise HTTPException(status_code=400, detail="Invalid email")
 
     if not verify_password(data.password, user.password):
-        raise HTTPException(status_code=400, detail="Invalid email or password")
+        raise HTTPException(status_code=400, detail="Invalid password")
 
     token = create_access_token({"user_id": user.id})
 
